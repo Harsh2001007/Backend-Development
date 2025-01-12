@@ -19,7 +19,7 @@ const server = http.createServer((req, resp) => {
       "content-type": "application/json",
     });
     resp.end(apiData);
-  } else {
+  } else if (path === "/testing") {
     resp.end("404 not found");
   }
 });

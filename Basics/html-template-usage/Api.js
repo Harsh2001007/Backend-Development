@@ -45,6 +45,8 @@ const server = http.createServer((req, resp) => {
     console.log(product);
 
     resp.end(output);
+  } else if (pathname === "/test") {
+    resp.end("testing nodemon");
   }
 });
 
