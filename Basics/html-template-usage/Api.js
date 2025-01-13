@@ -46,7 +46,7 @@ const server = http.createServer((req, resp) => {
 
     resp.end(output);
   } else if (pathname === "/test") {
-    resp.end("testing nodemon");
+    resp.end("testing nodemon for continuous development");
   }
 });
 
