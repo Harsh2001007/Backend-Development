@@ -17,6 +17,7 @@ app.get('/jsondata', (req, resp) => {
     screenName: 'jsondata',
     portNumber: port,
     author: 'harsh sachan',
+    gamingName: 'Dr. POISON',
   });
 });
 
