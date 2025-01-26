@@ -1,6 +1,9 @@
 const express = require('express');
-
 const app = express();
+
+// adding middleware for post requests
+
+app.use(express.json());
 
 const port = 5555;
 
