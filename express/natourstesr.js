@@ -63,6 +63,24 @@ app.post('/api/v1/tours', (req, resp) => {
   );
 });
 
+// patch api working tree
+
+app.patch('/api/v1/tours/:id', (req, resp) => {
+  if (req.params.id * 1 > toursData.length) {
+    return resp.status(401).json({
+      status: 'failed',
+      message: 'invalid id',
+    });
+  }
+
+  resp.status(200).json({
+    status: 'success',
+    data: {
+      tour: '<Updated tour here ....>',
+    },
+  });
+});
+
 app.listen(5556, () => {
   console.log('api started');
 });
