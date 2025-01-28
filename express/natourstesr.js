@@ -81,6 +81,22 @@ app.patch('/api/v1/tours/:id', (req, resp) => {
   });
 });
 
+// delete api working tree
+
+app.delete('/api/v1/tours/:id', (req, resp) => {
+  if (req.params.id * 1 > toursData.length) {
+    return resp.status(401).json({
+      status: 'failed',
+      message: 'invalid id',
+    });
+  }
+
+  resp.status(201).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 app.listen(5556, () => {
   console.log('api started');
 });
