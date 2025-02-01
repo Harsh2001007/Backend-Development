@@ -21,7 +21,7 @@ const toursData = JSON.parse(
 const getAllTours = (req, resp) => {
   console.log(req.requestTime);
   resp.status(200).json({
-    status: 'success',
+    status: 'success done',
     type: 'GET',
     requestedAt: req.requestTime,
     result: toursData.length,
