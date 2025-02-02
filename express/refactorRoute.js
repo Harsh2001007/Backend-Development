@@ -68,13 +68,75 @@ const deleteTour = (req, resp) => {
   });
 };
 
-// app.get('/api/v1/tours', getAllTours);
-// app.post('/api/v1/tours', postTour);
-// app.patch('/api/v1/tours/:id', postTour);
-// app.delete('/api/v1/tours/:id', deleteTour);
+const getParticularTour = (req, resp) => {
+  console.log(req.params);
+  const tourId = req.params.id * 1;
+  const tour = toursData.find((item) => item.id === tourId);
+
+  if (tourId > toursData.length) {
+    console.log('401 called');
+    return resp.status(401).json({
+      status: 'failed',
+      message: 'invalid id on params for particular user',
+    });
+  }
+
+  resp.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  });
+};
+
+const getAllUsers = (req, resp) => {
+  resp.status(500).json({
+    message: 'internal error',
+    status: 'fail',
+  });
+};
+
+const postUser = (req, resp) => {
+  resp.status(500).json({
+    message: 'internal error',
+    status: 'fail',
+  });
+};
+
+const getParticularUser = (req, resp) => {
+  resp.status(500).json({
+    message: 'internal error',
+    status: 'fail',
+  });
+};
+
+const patchUser = (req, resp) => {
+  resp.status(500).json({
+    message: 'internal error',
+    status: 'fail',
+  });
+};
+
+const deleteUser = (req, resp) => {
+  resp.status(500).json({
+    message: 'internal error',
+    status: 'fail',
+  });
+};
 
 app.route('/api/v1/tours').get(getAllTours).post(postTour);
-app.route('/api/v1/tours/:id').patch(patchTour).delete(deleteTour);
+app
+  .route('/api/v1/tours/:id')
+  .get(getParticularTour)
+  .patch(patchTour)
+  .delete(deleteTour);
+
+app.route('/api/v1/users').get(getAllUsers).post(postUser);
+app
+  .route('/api/v1/users/:id')
+  .get(getParticularUser)
+  .patch(patchUser)
+  .delete(deleteUser);
 
 app.listen(5556, () => {
   console.log('api started');
