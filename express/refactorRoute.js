@@ -99,7 +99,7 @@ const getAllUsers = (req, resp) => {
 const postUser = (req, resp) => {
   resp.status(500).json({
     message: 'internal error',
-    status: 'fail',
+    status: 'failed',
   });
 };
 
