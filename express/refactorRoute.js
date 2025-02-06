@@ -92,7 +92,7 @@ const getParticularTour = (req, resp) => {
 const getAllUsers = (req, resp) => {
   resp.status(500).json({
     message: 'internal error',
-    status: 'fail',
+    status: 'fails',
   });
 };
 
