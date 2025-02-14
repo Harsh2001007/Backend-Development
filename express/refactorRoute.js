@@ -8,6 +8,9 @@ const toursData = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
 
+const tourRouter = express.Router();
+const userRouter = express.Router();
+
 const getAllTours = (req, resp) => {
   resp.status(200).json({
     status: 'success',
@@ -92,7 +95,7 @@ const getParticularTour = (req, resp) => {
 const getAllUsers = (req, resp) => {
   resp.status(500).json({
     message: 'internal error',
-    status: 'fails',
+    status: 'failed response',
   });
 };
 
@@ -124,19 +127,22 @@ const deleteUser = (req, resp) => {
   });
 };
 
-app.route('/api/v1/tours').get(getAllTours).post(postTour);
-app
-  .route('/api/v1/tours/:id')
+tourRouter.route('/').get(getAllTours).post(postTour);
+tourRouter
+  .route('/tours/:id')
   .get(getParticularTour)
   .patch(patchTour)
   .delete(deleteTour);
 
-app.route('/api/v1/users').get(getAllUsers).post(postUser);
-app
-  .route('/api/v1/users/:id')
+userRouter.route('/').get(getAllUsers).post(postUser);
+userRouter
+  .route('/:id')
   .get(getParticularUser)
   .patch(patchUser)
   .delete(deleteUser);
+
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 app.listen(5556, () => {
   console.log('api started');
