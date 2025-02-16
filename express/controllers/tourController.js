@@ -4,6 +4,17 @@ const toursData = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+exports.checkId = (req, resp, next, value) => {
+  console.log('middleware id value is ', value);
+  if (req.params.id * 1 > toursData.length) {
+    return resp.status(401).json({
+      status: 'failed',
+      message: 'invalid id',
+    });
+  }
+  next();
+};
+
 exports.getAllTours = (req, resp) => {
   resp.status(200).json({
     status: 'success',
@@ -35,13 +46,6 @@ exports.postTour = (req, resp) => {
 };
 
 exports.patchTour = (req, resp) => {
-  if (req.params.id * 1 > toursData.length) {
-    return resp.status(401).json({
-      status: 'failed',
-      message: 'invalid id',
-    });
-  }
-
   resp.status(200).json({
     status: 'success',
     data: {
@@ -51,13 +55,6 @@ exports.patchTour = (req, resp) => {
 };
 
 exports.deleteTour = (req, resp) => {
-  if (req.params.id * 1 > toursData.length) {
-    return resp.status(401).json({
-      status: 'failed',
-      message: 'invalid id',
-    });
-  }
-
   resp.status(201).json({
     status: 'success deleted id',
     data: null,
@@ -65,19 +62,8 @@ exports.deleteTour = (req, resp) => {
 };
 
 exports.getParticularTour = (req, resp) => {
-  console.log(req.params);
-
   const tourId = req.params.id * 1;
   const tour = toursData.find((item) => item.id === tourId);
-
-  if (tourId > toursData.length) {
-    console.log('401 called');
-    return resp.status(401).json({
-      status: 'failed',
-      message: 'invalid id on params for particular user',
-    });
-  }
-
   resp.status(200).json({
     status: 'success',
     data: {
