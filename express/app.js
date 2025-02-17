@@ -4,6 +4,7 @@ const app = express();
 // adding middleware for post requests
 
 app.use(express.json());
+app.use(express.static(`${__dirname}/express/dev-data`));
 
 const port = 5555;
 
@@ -25,5 +26,5 @@ app.get('/jsondata', (req, resp) => {
 });
 
 app.listen(port, () => {
-  console.log('server started');
+  console.log('server started on port 5555');
 });
