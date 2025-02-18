@@ -18,7 +18,7 @@ app.get('/dashboard', (req, resp) => {
 
 app.get('/jsondata', (req, resp) => {
   resp.status(200).json({
-    screenName: 'jsondata',
+    screenName: 'jsondata screen',
     portNumber: port,
     author: 'harsh sachan',
     gamingName: 'Dr. POISON',
