@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use((req, resp, next) => {
   console.log('bye from middleware');
+  console.log(__dirname);
   next();
 });
 

@@ -1,30 +1,35 @@
 const express = require('express');
+const path = require('path');
+
 const app = express();
+console.log('bye bye');
 
-// adding middleware for post requests
-
+// Middleware
 app.use(express.json());
-app.use(express.static(`${__dirname}/express/dev-data`));
+app.use(express.static(path.join(__dirname, 'dev-data', 'img')));
 
-const port = 5555;
+// Test route to debug
+app.get('/test-path', (req, res) => {
+  res.send(
+    `Serving static files from: ${path.join(__dirname, 'dev-data', 'img')}`
+  );
+});
 
 app.get('/', (req, resp) => {
-  resp.status(200).send('i am from home page');
+  resp.status(200).send('I am from the home page');
 });
 
 app.get('/dashboard', (req, resp) => {
-  resp.status(404).send('i am from dashboard but belongs to 404');
+  resp.status(404).send('I am from the dashboard but belongs to 404');
 });
 
 app.get('/jsondata', (req, resp) => {
   resp.status(200).json({
     screenName: 'jsondata',
-    portNumber: port,
+    portNumber: 5556,
     author: 'harsh sachan',
     gamingName: 'Dr. POISON',
   });
 });
 
-app.listen(port, () => {
-  console.log('server started on port 5555');
-});
+module.exports = app;
