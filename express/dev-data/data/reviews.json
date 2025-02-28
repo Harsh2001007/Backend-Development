@@ -5,7 +5,8 @@
     "rating": 5,
     "user": "5c8a1dfa2f8fb814b56fa181",
     "tour": "5c88fa8cf4afda39709c2955",
-    "status": "full"
+    "status": "full",
+    "type": "Place"
   },
   {
     "_id": "5c8a355b14eb5c17645c9109",
