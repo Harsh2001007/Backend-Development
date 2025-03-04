@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
+const tourRouter = require('./routes/tourRouter');
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'dev-data', 'img')));
+app.use('/api/v1/tours', tourRouter);
 
 // Test route to debug
 app.get('/test-path', (req, res) => {
