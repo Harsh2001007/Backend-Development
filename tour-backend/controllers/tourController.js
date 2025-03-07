@@ -51,3 +51,22 @@ exports.getParticularTour = async (req, resp) => {
     });
   }
 };
+
+exports.deleteParticularTour = async (req, resp) => {
+  try {
+    const deletedTour = await Tour.findByIdAndDelete(req.params.id);
+
+    resp.status(200).json({
+      status: "success",
+      data: {
+        deletedTour,
+        id: req.params.id,
+      },
+    });
+  } catch (error) {
+    resp.status(400).json({
+      status: "fail",
+      error: err,
+    });
+  }
+};

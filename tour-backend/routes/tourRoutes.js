@@ -4,6 +4,9 @@ const tourController = require("../controllers/tourController");
 const router = express.Router();
 
 router.route("/").get(tourController.getAllTour).post(tourController.postTour);
-router.route("/:id").get(tourController.getParticularTour);
+router
+  .route("/:id")
+  .get(tourController.getParticularTour)
+  .delete(tourController.deleteParticularTour);
 
 module.exports = router;
