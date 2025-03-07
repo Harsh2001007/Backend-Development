@@ -70,3 +70,22 @@ exports.deleteParticularTour = async (req, resp) => {
     });
   }
 };
+
+exports.updateTour = async (req, resp) => {
+  try {
+    const updateTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    resp.status(200).json({
+      status: "document updated",
+      tour: updateTour,
+    });
+  } catch (error) {
+    resp.status(400).json({
+      status: "fail",
+      error: error,
+    });
+  }
+};
