@@ -1,4 +1,3 @@
-const { json } = require("express");
 const Tour = require("../models/tourModel");
 
 exports.getAllTour = async (req, resp) => {
@@ -15,7 +14,14 @@ exports.getAllTour = async (req, resp) => {
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
     console.log(JSON.parse(queryStr), typeof queryStr);
 
-    const query = Tour.find(JSON.parse(queryStr));
+    let query = Tour.find(JSON.parse(queryStr));
+
+    // Sorting
+
+    if (req.query.sort) {
+      query = query.sort(req.query.sort);
+    }
+
     const tourData = await query;
 
     resp.status(200).json({
