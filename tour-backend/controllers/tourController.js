@@ -16,20 +16,8 @@ exports.getAllTour = async (req, resp) => {
     console.log(JSON.parse(queryStr), typeof queryStr);
 
     const query = Tour.find(JSON.parse(queryStr));
-
     const tourData = await query;
 
-    // const tourData = await Tour.find({
-    //   duration: 5,
-    //   difficulty: "easy",
-    //   maxGroupSize: 8,
-    // });
-
-    // const tourData = await Tour.find()
-    //   .where("duration")
-    //   .equals(5)
-    //   .where("difficulty")
-    //   .equals("easy");
     resp.status(200).json({
       status: "success",
       count: tourData.length,
