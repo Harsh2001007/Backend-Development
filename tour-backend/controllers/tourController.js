@@ -42,7 +42,7 @@ exports.postTour = async (req, resp) => {
     const newTour = await Tour.create(req.body);
 
     resp.status(201).json({
-      status: "success",
+      status: "tour created",
       data: {
         tour: newTour,
       },
