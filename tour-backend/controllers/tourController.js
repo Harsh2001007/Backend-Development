@@ -49,7 +49,7 @@ exports.postTour = async (req, resp) => {
     });
   } catch (err) {
     resp.status(400).json({
-      status: "doc not created",
+      status: "doc not created, plz check error",
       error: err,
     });
   }
