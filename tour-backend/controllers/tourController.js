@@ -22,6 +22,15 @@ exports.getAllTour = async (req, resp) => {
       query = query.sort(req.query.sort);
     }
 
+    // Field limiting
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
     const tourData = await query;
 
     resp.status(200).json({
