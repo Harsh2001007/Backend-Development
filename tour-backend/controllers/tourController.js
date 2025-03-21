@@ -76,7 +76,7 @@ exports.getParticularTour = async (req, resp) => {
     });
   } catch (err) {
     resp.status(400).json({
-      status: "fail",
+      status: "error occured",
       error: err,
     });
   }
