@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const tourSchema = new mongoose.Schema(
   {
@@ -7,6 +8,7 @@ const tourSchema = new mongoose.Schema(
       required: [true, "A tour must have a name"],
       unique: true,
     },
+    slug: String,
     duration: {
       type: Number,
       required: [true, "duration is required"],
@@ -75,8 +77,20 @@ tourSchema.virtual("durationWeeks").get(function () {
 
 //Document middleware
 
-tourSchema.pre("save", function () {
-  console.log(this);
+tourSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  console.log("saving start");
+  next();
+});
+
+tourSchema.pre("save", function (next) {
+  console.log("will save the data");
+  next();
+});
+
+tourSchema.post("save", function (doc, next) {
+  console.log(doc);
+  next();
 });
 
 const Tour = mongoose.model("Tour", tourSchema);
