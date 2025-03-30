@@ -7,6 +7,8 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, "A tour must have a name"],
       unique: true,
+      maxLength: [40, "Tour lenght can not be more than 40"],
+      minLength: [6, "Tour legth can not be less than 6"],
     },
     slug: String,
     duration: {
@@ -20,6 +22,10 @@ const tourSchema = new mongoose.Schema(
     difficulty: {
       type: String,
       required: [true, "difficulty is required"],
+      enum: {
+        values: ["easy", "medium", "difficult"],
+        message: "values can only be easy, medium, difficult",
+      },
     },
     ratingAverage: {
       type: Number,
@@ -52,6 +58,10 @@ const tourSchema = new mongoose.Schema(
     startDates: {
       type: [Date],
     },
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
     priceDiscount: {
       type: Number,
     },
@@ -77,21 +87,21 @@ tourSchema.virtual("durationWeeks").get(function () {
 
 //Document middleware
 
-tourSchema.pre("save", function (next) {
-  this.slug = slugify(this.name, { lower: true });
-  console.log("saving start");
-  next();
-});
+// tourSchema.pre("save", function (next) {
+//   this.slug = slugify(this.name, { lower: true });
+//   console.log('saving start')
+//   next();
+// });
 
-tourSchema.pre("save", function (next) {
-  console.log("will save the data");
-  next();
-});
+// tourSchema.pre("save", function (next) {
+//   console.log("will save the data");
+//   next();
+// });
 
-tourSchema.post("save", function (doc, next) {
-  console.log(doc);
-  next();
-});
+// tourSchema.post("save", function (doc, next) {
+//   console.log(doc);
+//   next();
+// });
 
 const Tour = mongoose.model("Tour", tourSchema);
 
