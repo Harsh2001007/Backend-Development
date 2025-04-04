@@ -35,7 +35,7 @@ const server = http.createServer((req, resp) => {
 
     resp.end(output);
   } else if (pathname === "/product") {
-    resp.writeHead(200, {
+    resp.writeHead(201, {
       "Content-Type": "text/html",
     });
 
