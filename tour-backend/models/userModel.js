@@ -19,10 +19,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide your password"],
     minlength: 8,
+    select: false,
   },
   confirmPassword: {
     type: String,
     required: [true, "Please confirm your password"],
+    select: false,
     validate: {
       validator: function (el) {
         return el === this.password;
@@ -40,6 +42,10 @@ userSchema.pre("save", async function (next) {
 
   next();
 });
+
+userSchema.methods.correctPass = async function (candidatePass, actualPass) {
+  return await bcrypt.compare(candidatePass, actualPass);
+};
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
