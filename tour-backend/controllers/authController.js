@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const User = require("./../models/userModel");
 const catchAsync = require("./../utils/catchAsynch");
 const AppError = require("./../utils/appError");
+const { promisify } = require("util");
+const { decode } = require("punycode");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -50,4 +52,51 @@ exports.login = catchAsync(async (req, resp, next) => {
     status: "success",
     token,
   });
+});
+
+exports.protect = catchAsync(async (req, resp, next) => {
+  // 1) Getting token and check if it is there
+  let token;
+
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  if (!token) {
+    return next(
+      new AppError("You are not logged in! please log in to get access.")
+    );
+  }
+
+  // 2) Verification of token
+
+  const decodedToken = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET
+  );
+
+  // 3) Check if user still exists
+
+  const freshUser = await User.findById(decodedToken.id);
+  if (!freshUser) {
+    return next(
+      new AppError(
+        "The user belonging to this token does no longer exists.",
+        401
+      )
+    );
+  }
+
+  // 4) Check if user changed password after the token was issued.
+
+  if (freshUser.changedPasswordAfter(decodedToken.iat)) {
+    return next(new AppError("User recently changed the password", 401));
+  }
+
+  // FINAL : Grant access to protected routes
+  req.user = freshUser;
+  next();
 });
