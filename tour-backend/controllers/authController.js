@@ -22,7 +22,7 @@ exports.signUp = catchAsync(async (req, resp, next) => {
   const token = signToken(newUser._id);
 
   resp.status(201).json({
-    status: "success",
+    status: "done",
     token,
     data: {
       user: newUser,
